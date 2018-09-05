@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const app = express();
+mongoose.connect("mongodb://localhost/ninjago", { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
 app.use(bodyParser.urlencoded({
     extended: true
