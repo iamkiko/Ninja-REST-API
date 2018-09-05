@@ -8,10 +8,10 @@ router.get("/ninjas", function(req, res){
 });
 
 //add a new ninja to db
-router.post("/ninjas", function(req, res){
+router.post("/ninjas", function(req, res, next){
     Ninja.create(req.body).then(function(ninja){ //create new instance of ninja locally and then save to db
       res.send(ninja);
-    });
+    }).catch(next);
 });
 
 //update a new ninja in db
@@ -21,7 +21,9 @@ router.put("/ninjas/:id", function(req, res){
 
 //delete a ninja from db
 router.delete("/ninjas/:id", function(req, res){
-    res.send({type: "DELETE"});
+    Ninja.findByIdAndRemove({_id: req.params.id}).then(function(ninja){
+      res.send(ninja);
+    });
 });
 
 module.exports = router;
